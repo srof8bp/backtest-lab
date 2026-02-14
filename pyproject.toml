@@ -1,0 +1,74 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "backtest-lab"
+version = "0.1.0"
+description = "Multi-asset portfolio backtesting with a dead-simple API. Vectorized engine, walk-forward analysis, and comprehensive metrics."
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.10"
+authors = [{ name = "Terrence P" }]
+keywords = [
+    "backtesting",
+    "portfolio",
+    "trading",
+    "finance",
+    "quantitative",
+    "investing",
+    "sharpe-ratio",
+    "rebalancing",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Financial and Insurance Industry",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Office/Business :: Financial :: Investment",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "Typing :: Typed",
+]
+
+dependencies = [
+    "pandas>=2.0",
+    "numpy>=1.24",
+]
+
+[project.optional-dependencies]
+stats = ["scipy>=1.10"]
+dev = [
+    "pytest>=7.0",
+    "ruff>=0.1",
+    "mypy>=1.5",
+    "pandas-stubs>=2.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/TjTheDj2011/backtest-lab"
+Documentation = "https://github.com/TjTheDj2011/backtest-lab#readme"
+Repository = "https://github.com/TjTheDj2011/backtest-lab"
+Issues = "https://github.com/TjTheDj2011/backtest-lab/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/backtest_lab"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP", "B", "SIM"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true

